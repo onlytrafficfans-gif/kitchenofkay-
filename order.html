@@ -2,11 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0c0806" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Kitchen of Kay" />
   <meta name="description" content="Build a fast pickup order from Kitchen of Kay's weekly menu." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fast Order — Kitchen of Kay" />
+  <meta property="og:description" content="Build a Kitchen of Kay pickup request and text it directly to the kitchen." />
+  <meta property="og:url" content="https://kitchenofkay.com/order.html" />
+  <meta property="og:image" content="https://kitchenofkay.com/media/menu/oxtails.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://kitchenofkay.com/order.html" />
   <title>Fast Order — Kitchen of Kay</title>
   <link rel="icon" href="/media/logo.webp" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/src/order.css" />
 </head>
 <body>
@@ -28,6 +42,7 @@
       <h1>Build your plate.<br />We’ll bring the flavor.</h1>
       <p class="intro">Choose a favorite, set the quantity, and send your pickup request straight to the kitchen.</p>
       <div class="service-note"><span>◆</span> Two main dishes featured each week. Wings always available.</div>
+      <button class="install-app" type="button" data-install-app hidden>Install Kitchen of Kay</button>
     </section>
 
     <div class="order-layout">
@@ -56,6 +71,7 @@
           <div class="subtotal"><span>Estimated total</span><strong data-cart-total>$0</strong></div>
           <a class="text-order" data-text-order href="sms:+17473526722">Text order to the kitchen <span>↗</span></a>
           <button class="copy-order" type="button" data-copy-order>Copy order details</button>
+          <button class="clear-order" type="button" data-clear-order>Clear order</button>
           <p class="order-disclaimer">Your text opens for review before sending. The kitchen confirms availability and pickup time.</p>
         </div>
       </aside>
@@ -63,6 +79,10 @@
   </main>
 
   <footer><a href="/#experience">Kitchen of Kay</a><span>Good food. Higher vibes.</span><a href="tel:+17473526722">(747) 352-6722</a></footer>
+  <div class="mobile-cart-bar" data-mobile-cart-bar hidden>
+    <button type="button" data-view-order><span data-mobile-cart-label><strong data-mobile-cart-count>0</strong> items</span><span>View order · <strong data-mobile-cart-total>$0</strong></span></button>
+  </div>
+  <div class="app-toast" data-app-toast role="status" aria-live="polite" hidden></div>
   <script type="module" src="/src/order.js"></script>
 </body>
 </html>

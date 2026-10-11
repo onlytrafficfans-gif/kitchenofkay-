@@ -1,5 +1,6 @@
 import './style.css';
 import { ScrollFilm } from './scroll-film.js';
+import './pwa.js';
 
 const experience = document.querySelector('.experience');
 const intro = document.querySelector('.scene-copy');
@@ -13,6 +14,8 @@ const coverflow = document.querySelector('#dish-coverflow');
 const dishSlides = [...document.querySelectorAll('.dish-slide')];
 const dishDots = [...document.querySelectorAll('[data-menu-index]')];
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const compactMenu = matchMedia('(max-width: 760px)');
+const saveData = navigator.connection?.saveData === true;
 const scenes = [
   ['Seasoned with soul.', 'Scotch bonnet, pimento, thyme, and time.'],
   ['Let the fire talk.', 'Open flame. Real char. Island flavor.'],
@@ -52,7 +55,8 @@ const dishes = [
     sides: ['Twelve whole wings', 'Wings always available']
   }
 ];
-let motion = !reducedMotion.matches;
+const savedMotion = localStorage.getItem('kok-motion');
+let motion = savedMotion === null ? !reducedMotion.matches && !saveData : savedMotion === 'on';
 let film;
 let target = 0, position = 0, raf = 0, activeChapter = -1;
 let menuPosition = 0, activeDish = -1, dragStartX = 0, dragStartIndex = 0;
@@ -125,15 +129,23 @@ function renderMenu(value) {
 }
 
 function menuScrollPosition() {
+  if (compactMenu.matches) return menuPosition;
   const max = menuExperience.offsetHeight - innerHeight;
   if (max <= 0) return 0;
   return clamp((scrollY - menuExperience.offsetTop) / max) * (dishes.length - 1);
 }
 
-function syncMenuToScroll() { renderMenu(menuScrollPosition()); }
+function syncMenuToScroll() {
+  if (!compactMenu.matches && !isDraggingDish) renderMenu(menuScrollPosition());
+}
 
 function goToDish(index, smooth = true) {
   const next = clamp(index, 0, dishes.length - 1);
+  if (compactMenu.matches) {
+    renderMenu(next);
+    coverflow.focus({ preventScroll: true });
+    return;
+  }
   const max = menuExperience.offsetHeight - innerHeight;
   const top = menuExperience.offsetTop + (next / (dishes.length - 1)) * max;
   scrollTo({ top, behavior: smooth && !reducedMotion.matches ? 'smooth' : 'instant' });
@@ -143,8 +155,8 @@ function applyMotion(enabled, preserveLocation = false) {
   const previousHeight = experience.offsetHeight;
   motion = enabled;
   document.documentElement.classList.toggle('motion-off', !enabled);
-  motionToggle.textContent = enabled ? 'Motion on' : 'Motion off';
-  motionToggle.setAttribute('aria-pressed', String(!enabled));
+  motionToggle.textContent = enabled ? 'Motion: on' : 'Motion: off';
+  motionToggle.setAttribute('aria-pressed', String(enabled));
   motionToggle.setAttribute('aria-label', enabled ? 'Turn off scroll motion' : 'Turn on scroll motion');
   if (enabled && !film) film = new ScrollFilm(document.querySelector('#film-canvas'), {
     count: 241,
@@ -164,8 +176,15 @@ chapters.forEach((button, i) => button.addEventListener('click', () => {
   const progress = i === 0 ? 0 : stops[i] + .035;
   scrollTo({top: experience.offsetTop + progress * (experience.offsetHeight-innerHeight), behavior:reducedMotion.matches ? 'instant':'smooth'});
 }));
-motionToggle.addEventListener('click', () => applyMotion(!motion, true));
-reducedMotion.addEventListener('change', e => applyMotion(!e.matches, true));
+motionToggle.addEventListener('click', () => {
+  localStorage.setItem('kok-motion', motion ? 'off' : 'on');
+  applyMotion(!motion, true);
+});
+reducedMotion.addEventListener('change', e => {
+  if (localStorage.getItem('kok-motion') === null) applyMotion(!e.matches && !saveData, true);
+});
+compactMenu.addEventListener('change', () => renderMenu(Math.round(menuPosition)));
+document.addEventListener('visibilitychange', () => film?.setPaused(document.hidden));
 document.querySelector('.dish-arrow-prev').addEventListener('click', () => goToDish(activeDish - 1));
 document.querySelector('.dish-arrow-next').addEventListener('click', () => goToDish(activeDish + 1));
 dishDots.forEach(dot => dot.addEventListener('click', () => goToDish(Number(dot.dataset.menuIndex))));
@@ -189,6 +208,10 @@ coverflow.addEventListener('pointerup', event => {
   isDraggingDish = false;
   coverflow.releasePointerCapture(event.pointerId);
   goToDish(Math.round(menuPosition));
+});
+coverflow.addEventListener('pointercancel', () => {
+  isDraggingDish = false;
+  renderMenu(Math.round(menuPosition));
 });
 applyMotion(motion);
 renderMenu(0);

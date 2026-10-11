@@ -1,4 +1,5 @@
 import './order.css';
+import './pwa.js';
 
 const dishes = [
   { id:'oxtails', name:'Oxtails', price:30, image:'/media/menu/oxtails.webp', tag:'Slow-braised', description:'Fork-tender oxtails in rich island gravy with your choice of classic sides.' },
@@ -20,6 +21,13 @@ const textOrder = document.querySelector('[data-text-order]');
 const copyOrder = document.querySelector('[data-copy-order]');
 const orderName = document.querySelector('#order-name');
 const orderNote = document.querySelector('#order-note');
+const clearOrder = document.querySelector('[data-clear-order]');
+const mobileCartBar = document.querySelector('[data-mobile-cart-bar]');
+const mobileCartCount = document.querySelector('[data-mobile-cart-count]');
+const mobileCartLabel = document.querySelector('[data-mobile-cart-label]');
+const mobileCartTotal = document.querySelector('[data-mobile-cart-total]');
+const viewOrder = document.querySelector('[data-view-order]');
+const STORAGE_KEY = 'kok-order-draft-v1';
 
 grid.innerHTML = dishes.map(dish => `
   <article class="order-card" data-dish="${dish.id}">
@@ -42,6 +50,31 @@ function orderText() {
 function updateLinks() {
   textOrder.href = `sms:+17473526722?body=${encodeURIComponent(orderText())}`;
 }
+function saveDraft() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      cart: Object.fromEntries(cart),
+      name: orderName.value,
+      note: orderNote.value
+    }));
+  } catch {
+    // Ordering still works when storage is blocked.
+  }
+}
+function restoreDraft() {
+  try {
+    const draft = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (!draft || typeof draft !== 'object') return;
+    Object.entries(draft.cart || {}).forEach(([id, value]) => {
+      const amount = Number(value);
+      if (dishes.some(dish => dish.id === id) && Number.isInteger(amount) && amount > 0 && amount <= 99) cart.set(id, amount);
+    });
+    orderName.value = typeof draft.name === 'string' ? draft.name.slice(0, 50) : '';
+    orderNote.value = typeof draft.note === 'string' ? draft.note.slice(0, 240) : '';
+  } catch {
+    try { localStorage.removeItem(STORAGE_KEY); } catch { /* Storage is unavailable. */ }
+  }
+}
 function renderCart() {
   const count = quantity();
   cartCount.textContent = count;
@@ -58,7 +91,12 @@ function renderCart() {
       </div>
     </div>`).join('');
   cartTotal.textContent = `$${total()}`;
+  mobileCartCount.textContent = count;
+  mobileCartLabel.lastChild.textContent = count === 1 ? ' item' : ' items';
+  mobileCartTotal.textContent = `$${total()}`;
+  mobileCartBar.hidden = count === 0;
   updateLinks();
+  saveDraft();
 }
 
 grid.addEventListener('click', event => {
@@ -79,7 +117,7 @@ cartItems.addEventListener('click', event => {
   if (next <= 0) cart.delete(id); else cart.set(id, next);
   renderCart();
 });
-[orderName, orderNote].forEach(field => field.addEventListener('input', updateLinks));
+[orderName, orderNote].forEach(field => field.addEventListener('input', () => { updateLinks(); saveDraft(); }));
 copyOrder.addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(orderText());
@@ -87,3 +125,14 @@ copyOrder.addEventListener('click', async () => {
     setTimeout(() => { copyOrder.textContent = 'Copy order details'; }, 1600);
   } catch { copyOrder.textContent = 'Select and copy from your text message'; }
 });
+clearOrder.addEventListener('click', () => {
+  cart.clear();
+  renderCart();
+  grid.querySelector('[data-add]')?.focus({ preventScroll: true });
+});
+viewOrder.addEventListener('click', () => {
+  document.querySelector('#your-order').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+});
+
+restoreDraft();
+renderCart();

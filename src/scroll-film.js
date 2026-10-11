@@ -14,8 +14,15 @@ export class ScrollFilm {
     this.queue = [];
     this.active = 0;
     this.enabled = true;
-    this.mobile = matchMedia('(max-width: 760px)').matches;
+    this.paused = false;
+    this.mobileQuery = matchMedia('(max-width: 760px)');
+    this.mobile = this.mobileQuery.matches;
     this.folder = this.mobile ? 'frames-mobile' : 'frames';
+    this.maxCache = this.mobile ? 18 : 28;
+    const connection = navigator.connection;
+    this.maxActive = connection?.saveData || /2g/.test(connection?.effectiveType || '') ? 2 : 4;
+    this.onBreakpoint = () => this.switchSource(this.mobileQuery.matches);
+    this.mobileQuery.addEventListener('change', this.onBreakpoint);
     this.resizeObserver = new ResizeObserver(() => { this.resize(); this.paint(true); });
     this.resizeObserver.observe(canvas);
     this.resize();
@@ -29,16 +36,17 @@ export class ScrollFilm {
     this.canvas.height = Math.round(height * dpr);
   }
   seek(progress) {
-    if (!this.enabled) return;
+    if (!this.enabled || this.paused) return;
     this.target = Math.max(0, Math.min(this.count - 1, Math.round(progress * (this.count - 1))));
     const wanted = [this.target];
-    for (let d = 1; d <= 6; d++) wanted.push(this.target + d, this.target - d);
+    const radius = this.mobile ? 4 : 6;
+    for (let d = 1; d <= radius; d++) wanted.push(this.target + d, this.target - d);
     this.queue = wanted.filter(i => i >= 0 && i < this.count && !this.cache.has(i) && !this.pending.has(i) && !this.failed.has(i));
     this.paint();
     this.pump();
   }
   pump() {
-    while (this.enabled && this.active < 4 && this.queue.length) {
+    while (this.enabled && !this.paused && this.active < this.maxActive && this.queue.length) {
       const frame = this.queue.shift();
       this.active++;
       this.pending.add(frame);
@@ -58,7 +66,7 @@ export class ScrollFilm {
         finally { URL.revokeObjectURL(url); }
       }
       this.cache.set(frame, bitmap);
-      while (this.cache.size > 28) {
+      while (this.cache.size > this.maxCache) {
         const farthest = [...this.cache.keys()].sort((a,b) => Math.abs(b - this.target) - Math.abs(a - this.target))[0];
         this.cache.get(farthest).close?.();
         this.cache.delete(farthest);
@@ -92,5 +100,22 @@ export class ScrollFilm {
       for (const bitmap of this.cache.values()) bitmap.close?.();
       this.cache.clear(); this.drawn = -1;
     } else this.seek(0);
+  }
+  setPaused(paused) {
+    this.paused = paused;
+    if (!paused && this.enabled) this.seek(this.target / Math.max(1, this.count - 1));
+  }
+  switchSource(mobile) {
+    if (mobile === this.mobile) return;
+    this.mobile = mobile;
+    this.folder = mobile ? 'frames-mobile' : 'frames';
+    this.maxCache = mobile ? 18 : 28;
+    this.queue = [];
+    for (const bitmap of this.cache.values()) bitmap.close?.();
+    this.cache.clear();
+    this.pending.clear();
+    this.failed.clear();
+    this.drawn = -1;
+    this.seek(this.target / Math.max(1, this.count - 1));
   }
 }
