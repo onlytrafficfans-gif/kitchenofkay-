@@ -27,6 +27,7 @@ const mobileCartCount = document.querySelector('[data-mobile-cart-count]');
 const mobileCartLabel = document.querySelector('[data-mobile-cart-label]');
 const mobileCartTotal = document.querySelector('[data-mobile-cart-total]');
 const viewOrder = document.querySelector('[data-view-order]');
+const orderError = document.querySelector('[data-order-error]');
 const STORAGE_KEY = 'kok-order-draft-v1';
 
 grid.innerHTML = dishes.map(dish => `
@@ -48,7 +49,8 @@ function orderText() {
   return [`Kitchen of Kay pickup request${name ? ` for ${name}` : ''}`, '', ...lines, '', `Estimated total: $${total()}`, note ? `Note: ${note}` : '', '', 'Please confirm availability and pickup time.'].filter(Boolean).join('\n');
 }
 function updateLinks() {
-  textOrder.href = `sms:+17473526722?body=${encodeURIComponent(orderText())}`;
+  orderError.hidden = true;
+  orderName.removeAttribute('aria-invalid');
 }
 function saveDraft() {
   try {
@@ -124,6 +126,17 @@ copyOrder.addEventListener('click', async () => {
     copyOrder.textContent = 'Order copied';
     setTimeout(() => { copyOrder.textContent = 'Copy order details'; }, 1600);
   } catch { copyOrder.textContent = 'Select and copy from your text message'; }
+});
+textOrder.addEventListener('click', () => {
+  const name = orderName.value.trim();
+  if (!name) {
+    orderError.textContent = 'Add a pickup name before opening the text message.';
+    orderError.hidden = false;
+    orderName.setAttribute('aria-invalid', 'true');
+    orderName.focus();
+    return;
+  }
+  location.href = `sms:+17473526722?body=${encodeURIComponent(orderText())}`;
 });
 clearOrder.addEventListener('click', () => {
   cart.clear();

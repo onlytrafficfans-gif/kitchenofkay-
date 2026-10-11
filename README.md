@@ -20,6 +20,7 @@ Open http://localhost:5173. To build for static hosting, run `npm run build`; pu
 - `src/style.css`: responsive visual styling.
 - `src/pwa.js`: app installation, connectivity feedback, and service-worker update handling.
 - `public/manifest.webmanifest`, `public/sw.js`, and `public/offline.html`: installable PWA metadata, offline caching, and branded offline fallback.
+- `privacy.html`, `terms.html`, and `404.html`: production policy information, ordering expectations, and a branded dead-end recovery page.
 - `public/media/frames/`: 241 original-video frames at 1280×720.
 - `public/media/frames-mobile/`: 241 lighter frames at 768×432.
 - `public/media/menu/`: six matching dish portraits on black plates, generated specifically for this menu.
@@ -32,6 +33,8 @@ The film retains its original imagery, including the board in the background. Th
 Normal desktop scrolling maps the pinned introduction to the film timeline. Chapter buttons are optional shortcuts. Images load around the requested frame, with at most 28 decoded desktop frames or 18 mobile frames retained. Mobile uses smaller frame files and direct dish navigation rather than a long pinned scroll sequence. The menu responds to dragging, previous/next controls, dish dots, and left/right arrow keys. There is no third-party analytics, API, font, or runtime CDN dependency.
 
 Reduced-motion preferences default to a still hero and ordinary page scrolling. Visitors can also disable motion themselves, and that preference is retained. Keyboard navigation, visible focus, semantic headings, larger touch targets, safe-area support, and a skip link are included. A static poster remains available if JavaScript or frame loading fails. Order drafts are saved locally and restored after a reload.
+
+Fast Order validates the pickup name before opening the visitor's messaging app. The three-step ordering guide, return navigation, privacy and terms links, `robots.txt`, and `sitemap.xml` cover the current pre-payment launch. Update the privacy notice and ordering terms when payment, email, analytics, or account services are connected.
 
 ## Publication
 

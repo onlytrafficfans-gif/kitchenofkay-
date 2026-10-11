@@ -11,6 +11,7 @@
   <meta name="apple-mobile-web-app-title" content="Kitchen of Kay" />
   <meta name="description" content="Build a fast pickup order from Kitchen of Kay's weekly menu." />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kitchen of Kay" />
   <meta property="og:title" content="Fast Order — Kitchen of Kay" />
   <meta property="og:description" content="Build a Kitchen of Kay pickup request and text it directly to the kitchen." />
   <meta property="og:url" content="https://kitchenofkay.com/order.html" />
@@ -23,7 +24,7 @@
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/src/order.css" />
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#order-menu">Skip to menu</a>
   <header class="order-header">
     <a class="brand" href="/#experience" aria-label="Kitchen of Kay home">
@@ -31,7 +32,7 @@
       <span>Kitchen of <strong>Kay</strong></span>
     </a>
     <nav aria-label="Order navigation">
-      <a href="/#weekly-menu">View experience</a>
+      <a class="back-link" href="/#weekly-menu"><span aria-hidden="true">←</span> Back to main site</a>
       <a class="header-cart" href="#your-order">Your order <span data-cart-count>0</span></a>
     </nav>
   </header>
@@ -43,6 +44,11 @@
       <p class="intro">Choose a favorite, set the quantity, and send your pickup request straight to the kitchen.</p>
       <div class="service-note"><span>◆</span> Two main dishes featured each week. Wings always available.</div>
       <button class="install-app" type="button" data-install-app hidden>Install Kitchen of Kay</button>
+      <ol class="order-steps" aria-label="How fast ordering works">
+        <li><strong>Choose</strong><span>Add dishes and set quantities.</span></li>
+        <li><strong>Review</strong><span>Add your pickup name and notes.</span></li>
+        <li><strong>Text</strong><span>Send the request and wait for confirmation.</span></li>
+      </ol>
     </section>
 
     <div class="order-layout">
@@ -65,11 +71,12 @@
         <div class="cart-items" data-cart-items aria-live="polite"></div>
         <div class="cart-footer" data-cart-footer hidden>
           <label for="order-name">Name for pickup</label>
-          <input id="order-name" type="text" autocomplete="name" placeholder="Your name" maxlength="50" />
+          <input id="order-name" type="text" autocomplete="name" placeholder="Your name" maxlength="50" required aria-describedby="order-error" />
           <label for="order-note">Kitchen note <span>optional</span></label>
           <textarea id="order-note" rows="3" placeholder="Side choices, allergies, pickup time…" maxlength="240"></textarea>
           <div class="subtotal"><span>Estimated total</span><strong data-cart-total>$0</strong></div>
-          <a class="text-order" data-text-order href="sms:+17473526722">Text order to the kitchen <span>↗</span></a>
+          <button class="text-order" type="button" data-text-order>Text order to the kitchen <span>↗</span></button>
+          <p class="order-error" id="order-error" data-order-error role="alert" hidden></p>
           <button class="copy-order" type="button" data-copy-order>Copy order details</button>
           <button class="clear-order" type="button" data-clear-order>Clear order</button>
           <p class="order-disclaimer">Your text opens for review before sending. The kitchen confirms availability and pickup time.</p>
@@ -78,7 +85,7 @@
     </div>
   </main>
 
-  <footer><a href="/#experience">Kitchen of Kay</a><span>Good food. Higher vibes.</span><a href="tel:+17473526722">(747) 352-6722</a></footer>
+  <footer><a href="/#weekly-menu">← Back to main site</a><nav aria-label="Footer navigation"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></nav><a href="#top" data-back-top>Back to top ↑</a><a href="tel:+17473526722">(747) 352-6722</a></footer>
   <div class="mobile-cart-bar" data-mobile-cart-bar hidden>
     <button type="button" data-view-order><span data-mobile-cart-label><strong data-mobile-cart-count>0</strong> items</span><span>View order · <strong data-mobile-cart-total>$0</strong></span></button>
   </div>

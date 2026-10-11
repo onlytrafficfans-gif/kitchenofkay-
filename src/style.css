@@ -41,3 +41,8 @@
 }
 @media(max-width:390px){.brand>span{font-size:11px}.contact-link{padding:10px;font-size:11px}.scene-copy{width:calc(100% - 32px);left:16px}.hero-actions a{font-size:9px;padding:0 9px}.menu-heading-row h2{font-size:34px}.menu-rule{max-width:115px}.dish-copy{min-height:286px}}
 @media(max-width:760px) and (max-height:700px){.scene-copy{bottom:30%}.scene-copy h1{font-size:42px}.scene-copy p{font-size:13px}.hero-actions{margin-top:12px}.experience-controls{bottom:101px}.chapters{bottom:20px}.menu-stage{min-height:860px}}
+
+/* Production footer navigation. */
+ .brand strong{color:#d6554b}
+footer nav{display:flex;gap:18px;font-size:11px;letter-spacing:.08em}
+@media(max-width:760px){footer nav{order:3;width:100%;gap:22px}footer p{order:4}}

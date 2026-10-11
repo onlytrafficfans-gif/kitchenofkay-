@@ -157,7 +157,7 @@ function applyMotion(enabled, preserveLocation = false) {
   document.documentElement.classList.toggle('motion-off', !enabled);
   motionToggle.textContent = enabled ? 'Motion: on' : 'Motion: off';
   motionToggle.setAttribute('aria-pressed', String(enabled));
-  motionToggle.setAttribute('aria-label', enabled ? 'Turn off scroll motion' : 'Turn on scroll motion');
+  motionToggle.setAttribute('aria-label', enabled ? 'Motion: on. Turn off scroll motion' : 'Motion: off. Turn on scroll motion');
   if (enabled && !film) film = new ScrollFilm(document.querySelector('#film-canvas'), {
     count: 241,
     onError: () => { document.querySelector('.media-error').hidden = false; }
