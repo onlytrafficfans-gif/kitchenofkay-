@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c0806" />
+  <meta name="description" content="Build a fast pickup order from Kitchen of Kay's weekly menu." />
+  <title>Fast Order — Kitchen of Kay</title>
+  <link rel="icon" href="/media/logo.webp" />
+  <link rel="stylesheet" href="/src/order.css" />
+</head>
+<body>
+  <a class="skip-link" href="#order-menu">Skip to menu</a>
+  <header class="order-header">
+    <a class="brand" href="/#experience" aria-label="Kitchen of Kay home">
+      <img src="/media/logo.webp" alt="" width="60" height="60" />
+      <span>Kitchen of <strong>Kay</strong></span>
+    </a>
+    <nav aria-label="Order navigation">
+      <a href="/#weekly-menu">View experience</a>
+      <a class="header-cart" href="#your-order">Your order <span data-cart-count>0</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="order-hero">
+      <p class="eyebrow">Kitchen of Kay · Los Angeles</p>
+      <h1>Build your plate.<br />We’ll bring the flavor.</h1>
+      <p class="intro">Choose a favorite, set the quantity, and send your pickup request straight to the kitchen.</p>
+      <div class="service-note"><span>◆</span> Two main dishes featured each week. Wings always available.</div>
+    </section>
+
+    <div class="order-layout">
+      <section class="menu-list" id="order-menu" aria-labelledby="order-menu-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">This week’s menu</p><h2 id="order-menu-title">Choose your dish</h2></div>
+          <p>Meals include rice and peas or white rice, steamed cabbage, baked mac, and candy yams or plantain.</p>
+        </div>
+        <div class="order-grid" data-order-grid></div>
+        <p class="porridge">Every meal comes with a complimentary side of porridge.</p>
+      </section>
+
+      <aside class="cart" id="your-order" aria-labelledby="cart-title">
+        <div class="cart-top"><p class="eyebrow">Pickup order</p><h2 id="cart-title">Your order</h2></div>
+        <div class="empty-cart" data-empty-cart>
+          <span>0</span>
+          <p>Your plate is waiting.</p>
+          <small>Tap “Add to order” on any dish to begin.</small>
+        </div>
+        <div class="cart-items" data-cart-items aria-live="polite"></div>
+        <div class="cart-footer" data-cart-footer hidden>
+          <label for="order-name">Name for pickup</label>
+          <input id="order-name" type="text" autocomplete="name" placeholder="Your name" maxlength="50" />
+          <label for="order-note">Kitchen note <span>optional</span></label>
+          <textarea id="order-note" rows="3" placeholder="Side choices, allergies, pickup time…" maxlength="240"></textarea>
+          <div class="subtotal"><span>Estimated total</span><strong data-cart-total>$0</strong></div>
+          <a class="text-order" data-text-order href="sms:+17473526722">Text order to the kitchen <span>↗</span></a>
+          <button class="copy-order" type="button" data-copy-order>Copy order details</button>
+          <p class="order-disclaimer">Your text opens for review before sending. The kitchen confirms availability and pickup time.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer><a href="/#experience">Kitchen of Kay</a><span>Good food. Higher vibes.</span><a href="tel:+17473526722">(747) 352-6722</a></footer>
+  <script type="module" src="/src/order.js"></script>
+</body>
+</html>

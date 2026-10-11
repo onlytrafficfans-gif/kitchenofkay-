@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#100b08"/>
+<title>Kitchen of Kay — Good food. Higher vibes.</title>
+<meta name="description" content="Step inside Kitchen of Kay. Island flavor, live fire, and a little soul in every plate. Los Angeles, California."/>
+<link rel="icon" type="image/webp" href="/media/logo.webp"/>
+<link rel="preload" as="image" href="/media/poster.webp"/>
+</head>
+<body>
+<a class="skip-link" href="#weekly-menu">Skip the film experience</a>
+<header class="site-header">
+<a class="brand" href="#experience" aria-label="Kitchen of Kay home"><img src="/media/logo.webp" alt="" width="60" height="60"/><span>Kitchen of <strong>Kay</strong></span></a>
+<nav aria-label="Main navigation"><a class="experience-link" href="#experience">The experience</a><a href="#weekly-menu">Weekly menu</a><a href="/order.html">Fast order</a><a class="contact-link" href="#contact">Get in touch</a></nav>
+</header>
+<main>
+<section class="experience" id="experience" aria-label="From our kitchen to your table">
+<div class="stage">
+<img class="poster" src="/media/poster.webp" alt="Chef Kay preparing jerk chicken in a warmly lit kitchen" width="1280" height="720" fetchpriority="high"/>
+<canvas id="film-canvas" aria-hidden="true"></canvas>
+<div class="shade" aria-hidden="true"></div>
+<div class="scene-copy" id="scene-copy">
+<h1>Good food.<br/>Higher vibes.</h1>
+<p>Island flavor. Live fire.<br class="mobile-break"/> A little soul in every plate.</p>
+
+</div>
+<div class="scene-caption" aria-hidden="true"><span id="chapter-title">Seasoned with soul.</span><p id="chapter-description">Scotch bonnet, pimento, thyme, and time.</p></div>
+<div class="experience-controls">
+<a class="scroll-cue" href="#weekly-menu"><span>Scroll to savor</span><svg viewBox="0 0 24 32" aria-hidden="true"><path d="M12 1v27M3 19l9 9 9-9"/></svg></a>
+<button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">Motion on</button>
+</div>
+<nav class="chapters" aria-label="Film chapters">
+<button type="button" data-chapter="0" aria-current="step"><span class="chapter-number">01</span><span>Season</span><i></i></button>
+<button type="button" data-chapter="1"><span class="chapter-number">02</span><span>Fire</span><i></i></button>
+<button type="button" data-chapter="2"><span class="chapter-number">03</span><span>Finish</span><i></i></button>
+<button type="button" data-chapter="3"><span class="chapter-number">04</span><span>Gather</span><i></i></button>
+</nav>
+<p class="media-error" hidden>The scroll film couldn’t load. You can still explore the weekly menu.</p>
+</div>
+</section>
+<section class="menu-experience" id="weekly-menu" aria-labelledby="menu-heading">
+  <div class="menu-stage">
+    <div class="menu-heading-row">
+      <div><p class="menu-kicker">Kitchen of Kay</p><h2 id="menu-heading">Weekly food drops</h2></div>
+      <p class="menu-rule">Two main dishes featured each week.<br/>Wings always available.</p>
+    </div>
+
+    <div class="dish-coverflow" id="dish-coverflow" role="region" aria-roledescription="carousel" aria-label="Weekly dishes" tabindex="0">
+      <article class="dish-slide" data-index="0" aria-label="1 of 6: Oxtails">
+        <img src="/media/menu/oxtails.webp" alt="Slow-braised oxtails with rice and peas, cabbage, baked macaroni and candy yams on a black plate" loading="lazy"/>
+      </article>
+      <article class="dish-slide" data-index="1" aria-label="2 of 6: Brownstew Chicken">
+        <img src="/media/menu/brownstew-chicken.webp" alt="Brown stew chicken with rice and peas, cabbage, baked macaroni and candy yams on a black plate" loading="lazy"/>
+      </article>
+      <article class="dish-slide" data-index="2" aria-label="3 of 6: Meatballs in Plum Sauce">
+        <img src="/media/menu/meatballs-plum.webp" alt="Meatballs in plum sauce with rice and peas, cabbage, baked macaroni and candy yams on a black plate" loading="lazy"/>
+      </article>
+      <article class="dish-slide" data-index="3" aria-label="4 of 6: Jerk Salmon">
+        <img src="/media/menu/jerk-salmon.webp" alt="Jerk salmon with rice and peas, cabbage, baked macaroni and candy yams on a black plate" loading="lazy"/>
+      </article>
+      <article class="dish-slide" data-index="4" aria-label="5 of 6: 8-Piece Wing Meal">
+        <img src="/media/menu/eight-wings.webp" alt="Eight glazed wings with rice and peas, cabbage, baked macaroni and candy yams on a black plate" loading="lazy"/>
+      </article>
+      <article class="dish-slide" data-index="5" aria-label="6 of 6: 12 Wings Only">
+        <img src="/media/menu/twelve-wings.webp" alt="Twelve glazed wings arranged on a black plate" loading="lazy"/>
+      </article>
+      <button class="dish-arrow dish-arrow-prev" type="button" aria-label="Previous dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></button>
+      <button class="dish-arrow dish-arrow-next" type="button" aria-label="Next dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg></button>
+    </div>
+
+    <div class="dish-copy" aria-live="polite">
+      <p class="dish-count"><span id="dish-number">01</span> / 06</p>
+      <h3 id="dish-name">Oxtails</h3>
+      <p class="dish-price" id="dish-price">$30 meal</p>
+      <p class="dish-bio" id="dish-bio">Low and slow until the meat yields at the touch of a fork. These deeply braised oxtails carry warm island spice, rich gravy and the kind of comfort that settles the whole table.</p>
+      <div class="dish-includes" id="dish-includes">
+        <span>Rice and Peas <small>or White Rice</small></span><span>Steamed Cabbage</span><span>Baked Mac</span><span>Candy Yams <small>or Plantain</small></span>
+      </div>
+    </div>
+
+    <div class="menu-controls">
+      <p>Drag or keep scrolling</p>
+      <div class="dish-dots" role="tablist" aria-label="Choose a dish">
+        <button type="button" role="tab" aria-label="Oxtails" aria-selected="true" data-menu-index="0"></button>
+        <button type="button" role="tab" aria-label="Brownstew Chicken" aria-selected="false" data-menu-index="1"></button>
+        <button type="button" role="tab" aria-label="Meatballs in Plum Sauce" aria-selected="false" data-menu-index="2"></button>
+        <button type="button" role="tab" aria-label="Jerk Salmon" aria-selected="false" data-menu-index="3"></button>
+        <button type="button" role="tab" aria-label="8-Piece Wing Meal" aria-selected="false" data-menu-index="4"></button>
+        <button type="button" role="tab" aria-label="12 Wings Only" aria-selected="false" data-menu-index="5"></button>
+      </div>
+      <p class="porridge-note">Every meal comes with a complimentary side of porridge.</p>
+    </div>
+  </div>
+</section>
+<section class="contact content-width" id="contact">
+<h2>Pull up hungry.</h2><p class="location">Los Angeles, California</p>
+<a class="phone" href="tel:+17473526722">(747) 352-6722</a>
+<p class="contact-description">Call for today’s hours, catering and large orders.</p>
+<a class="primary-button" href="tel:+17473526722">Call the kitchen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+</section>
+</main>
+<footer class="content-width"><a href="#experience" class="footer-brand">Kitchen of Kay</a><p>Good food. Higher vibes.</p><a class="back-top" href="#experience">Back to top <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V3M5 10l7-7 7 7"/></svg></a></footer>
+
+<noscript><style>.experience{height:100svh}.chapters,.motion-toggle,.watch-film{display:none}.scene-copy{opacity:1!important}</style></noscript>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
