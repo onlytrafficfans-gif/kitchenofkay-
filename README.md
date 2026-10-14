@@ -1,6 +1,6 @@
 # Kitchen of Kay — scroll motion website
 
-A responsive, installable restaurant site built around the supplied 15-second film and weekly menu. On desktop, scrolling advances and reverses the film before flowing into a six-dish coverflow. Mobile uses a lighter, direct carousel and a dedicated fast-order flow designed for dependable one-handed use.
+A responsive, installable restaurant site built around the supplied 15-second film, weekly menu, and the chef's personal story. On desktop, scrolling advances and reverses the film before flowing into a six-dish coverflow. Mobile uses a lighter, direct carousel and a dedicated fast-order flow designed for dependable one-handed use.
 
 ## Run
 
@@ -14,6 +14,7 @@ Open http://localhost:5173. To build for static hosting, run `npm run build`; pu
 ## Content
 
 - `index.html`: brand, weekly menu, and contact copy. The phone number and Los Angeles location came from the supplied site export; confirm these before publication.
+- `index.html` also includes the exact approved chef biography, a portrait frame from the supplied film, and the official Kitchen of Kay Facebook profile in the story, contact, and footer areas.
 - `order.html`: separate fast-order menu with dish selection, quantities, subtotal, copied order details, and a prefilled text request.
 - `src/main.js`: film and menu scroll mapping, chapter text, coverflow controls, drag interaction, and accessibility controls.
 - `src/scroll-film.js`: canvas frame loading, bounded decoded-frame cache, responsive source switching, and data-aware concurrency.

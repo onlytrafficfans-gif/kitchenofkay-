@@ -1,11 +1,11 @@
-const VERSION = 'kok-v3';
+const VERSION = 'kok-v4';
 const SHELL = `${VERSION}-shell`;
 const MEDIA = `${VERSION}-media`;
 const STATIC = `${VERSION}-static`;
 const SHELL_ASSETS = [
   '/', '/index.html', '/order.html', '/privacy.html', '/terms.html', '/404.html',
   '/offline.html', '/manifest.webmanifest', '/robots.txt', '/sitemap.xml',
-  '/media/logo.webp', '/media/poster.webp',
+  '/media/logo.webp', '/media/poster.webp', '/media/frames/060.webp',
   '/icons/icon-192.png', '/icons/icon-512.png', '/icons/apple-touch-icon.png',
   '/media/menu/oxtails.webp', '/media/menu/brownstew-chicken.webp',
   '/media/menu/meatballs-plum.webp', '/media/menu/jerk-salmon.webp',
