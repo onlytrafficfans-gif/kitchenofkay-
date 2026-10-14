@@ -1,4 +1,4 @@
-const VERSION = 'kok-v4';
+const VERSION = 'kok-v5';
 const SHELL = `${VERSION}-shell`;
 const MEDIA = `${VERSION}-media`;
 const STATIC = `${VERSION}-static`;

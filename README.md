@@ -14,7 +14,7 @@ Open http://localhost:5173. To build for static hosting, run `npm run build`; pu
 ## Content
 
 - `index.html`: brand, weekly menu, and contact copy. The phone number and Los Angeles location came from the supplied site export; confirm these before publication.
-- `index.html` also includes the exact approved chef biography, a portrait frame from the supplied film, and the official Kitchen of Kay Facebook profile in the story, contact, and footer areas.
+- `index.html` also includes the exact approved chef biography, a portrait frame from the supplied film, and the official Kitchen of Kay Facebook and Instagram profiles in the story, contact, and footer areas.
 - `order.html`: separate fast-order menu with dish selection, quantities, subtotal, copied order details, and a prefilled text request.
 - `src/main.js`: film and menu scroll mapping, chapter text, coverflow controls, drag interaction, and accessibility controls.
 - `src/scroll-film.js`: canvas frame loading, bounded decoded-frame cache, responsive source switching, and data-aware concurrency.
