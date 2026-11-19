@@ -18,6 +18,7 @@ const cartFooter = document.querySelector('[data-cart-footer]');
 const cartTotal = document.querySelector('[data-cart-total]');
 const cartCount = document.querySelector('[data-cart-count]');
 const textOrder = document.querySelector('[data-text-order]');
+const checkoutOrder = document.querySelector('[data-checkout-order]');
 const copyOrder = document.querySelector('[data-copy-order]');
 const orderName = document.querySelector('#order-name');
 const orderNote = document.querySelector('#order-note');
@@ -51,6 +52,15 @@ function orderText() {
 function updateLinks() {
   orderError.hidden = true;
   orderName.removeAttribute('aria-invalid');
+}
+function validatePickupName() {
+  const name = orderName.value.trim();
+  if (name) return name;
+  orderError.textContent = 'Add a pickup name before checkout.';
+  orderError.hidden = false;
+  orderName.setAttribute('aria-invalid', 'true');
+  orderName.focus();
+  return '';
 }
 function saveDraft() {
   try {
@@ -128,15 +138,33 @@ copyOrder.addEventListener('click', async () => {
   } catch { copyOrder.textContent = 'Select and copy from your text message'; }
 });
 textOrder.addEventListener('click', () => {
-  const name = orderName.value.trim();
-  if (!name) {
-    orderError.textContent = 'Add a pickup name before opening the text message.';
-    orderError.hidden = false;
-    orderName.setAttribute('aria-invalid', 'true');
-    orderName.focus();
-    return;
-  }
+  const name = validatePickupName();
+  if (!name) return;
   location.href = `sms:+17473526722?body=${encodeURIComponent(orderText())}`;
+});
+checkoutOrder.addEventListener('click', async () => {
+  const name = validatePickupName();
+  if (!name) return;
+  const items = dishes.filter(dish => cart.has(dish.id)).map(dish => ({ id: dish.id, quantity: cart.get(dish.id) }));
+  if (!items.length) return;
+  checkoutOrder.disabled = true;
+  checkoutOrder.setAttribute('aria-busy', 'true');
+  checkoutOrder.firstChild.textContent = 'Opening secure checkout ';
+  try {
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items, name, note: orderNote.value.trim(), idempotencyKey: crypto.randomUUID?.() || `${Date.now()}-${Math.random()}` })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.url) throw new Error(data.error || 'Unable to start secure checkout.');
+    window.location.assign(data.url);
+  } catch (error) {
+    orderError.textContent = error.message || 'Unable to start secure checkout. Please try again or send a text request.';
+    orderError.hidden = false;
+    checkoutOrder.disabled = false;
+    checkoutOrder.removeAttribute('aria-busy');
+    checkoutOrder.firstChild.textContent = 'Pay securely with Stripe ';
+  }
 });
 clearOrder.addEventListener('click', () => {
   cart.clear();

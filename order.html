@@ -47,7 +47,7 @@
       <ol class="order-steps" aria-label="How fast ordering works">
         <li><strong>Choose</strong><span>Add dishes and set quantities.</span></li>
         <li><strong>Review</strong><span>Add your pickup name and notes.</span></li>
-        <li><strong>Text</strong><span>Send the request and wait for confirmation.</span></li>
+        <li><strong>Pay</strong><span>Pay securely, then wait for pickup confirmation.</span></li>
       </ol>
     </section>
 
@@ -75,11 +75,12 @@
           <label for="order-note">Kitchen note <span>optional</span></label>
           <textarea id="order-note" rows="3" placeholder="Side choices, allergies, pickup time…" maxlength="240"></textarea>
           <div class="subtotal"><span>Estimated total</span><strong data-cart-total>$0</strong></div>
-          <button class="text-order" type="button" data-text-order>Text order to the kitchen <span>↗</span></button>
+          <button class="checkout-order" type="button" data-checkout-order>Pay securely with Stripe <span>↗</span></button>
+          <button class="text-order" type="button" data-text-order>Or send a text request <span>↗</span></button>
           <p class="order-error" id="order-error" data-order-error role="alert" hidden></p>
           <button class="copy-order" type="button" data-copy-order>Copy order details</button>
           <button class="clear-order" type="button" data-clear-order>Clear order</button>
-          <p class="order-disclaimer">Your text opens for review before sending. The kitchen confirms availability and pickup time.</p>
+          <p class="order-disclaimer">Payments are handled securely by Stripe. The kitchen confirms availability and pickup time; unavailable items are refunded or replaced with your approval.</p>
         </div>
       </aside>
     </div>

@@ -15,7 +15,7 @@ Open http://localhost:5173. To build for static hosting, run `npm run build`; pu
 
 - `index.html`: brand, weekly menu, and contact copy. The phone number and Los Angeles location came from the supplied site export; confirm these before publication.
 - `index.html` also includes the exact approved chef biography, a portrait frame from the supplied film, and the official Kitchen of Kay Facebook and Instagram profiles in the story, contact, and footer areas.
-- `order.html`: separate fast-order menu with dish selection, quantities, subtotal, copied order details, and a prefilled text request.
+- `order.html`: separate fast-order menu with dish selection, quantities, server-validated Stripe Checkout, copied order details, and a prefilled text-request fallback.
 - `src/main.js`: film and menu scroll mapping, chapter text, coverflow controls, drag interaction, and accessibility controls.
 - `src/scroll-film.js`: canvas frame loading, bounded decoded-frame cache, responsive source switching, and data-aware concurrency.
 - `src/style.css`: responsive visual styling.
@@ -35,8 +35,10 @@ Normal desktop scrolling maps the pinned introduction to the film timeline. Chap
 
 Reduced-motion preferences default to a still hero and ordinary page scrolling. Visitors can also disable motion themselves, and that preference is retained. Keyboard navigation, visible focus, semantic headings, larger touch targets, safe-area support, and a skip link are included. A static poster remains available if JavaScript or frame loading fails. Order drafts are saved locally and restored after a reload.
 
-Fast Order validates the pickup name before opening the visitor's messaging app. The three-step ordering guide, return navigation, privacy and terms links, `robots.txt`, and `sitemap.xml` cover the current pre-payment launch. Update the privacy notice and ordering terms when payment, email, analytics, or account services are connected.
+Fast Order validates the pickup name before opening the visitor's messaging app or Stripe-hosted checkout. Cart values are revalidated server-side in `api/create-checkout-session.js`; prices never come from the browser request. Set `STRIPE_SECRET_KEY` in Vercel before payment is available.
 
 ## Publication
 
-The production site is available at [kitchenofkay.com](https://kitchenofkay.com) and is deployed through Vercel from the GitHub repository. There is no order-processing backend. Telephone links open the visitor's calling application; fast-order requests are prepared as a text message for the visitor to review and send.
+The production site is available at [kitchenofkay.com](https://kitchenofkay.com) and is deployed through Vercel from the GitHub repository. Set `STRIPE_SECRET_KEY` in the Vercel project’s Production, Preview, and Development environments before activating payments. Telephone links open the visitor's calling application; fast-order requests can also be prepared as a text message for the visitor to review and send.
+
+For a safe launch, first add a Stripe test secret key (`sk_test_...`) and complete one test purchase with Stripe’s test card `4242 4242 4242 4242`, any future expiration date, and any CVC. After the workflow is confirmed, replace it with the live secret key (`sk_live_...`) in Vercel and enable Stripe Dashboard email receipts. Kitchen notifications should be connected through a webhook and Resend before relying on the checkout for unattended order fulfillment.

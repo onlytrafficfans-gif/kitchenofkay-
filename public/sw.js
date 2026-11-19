@@ -1,9 +1,9 @@
-const VERSION = 'kok-v5';
+const VERSION = 'kok-v6';
 const SHELL = `${VERSION}-shell`;
 const MEDIA = `${VERSION}-media`;
 const STATIC = `${VERSION}-static`;
 const SHELL_ASSETS = [
-  '/', '/index.html', '/order.html', '/privacy.html', '/terms.html', '/404.html',
+  '/', '/index.html', '/order.html', '/order-success.html', '/privacy.html', '/terms.html', '/404.html',
   '/offline.html', '/manifest.webmanifest', '/robots.txt', '/sitemap.xml',
   '/media/logo.webp', '/media/poster.webp', '/media/frames/060.webp',
   '/icons/icon-192.png', '/icons/icon-512.png', '/icons/apple-touch-icon.png',
