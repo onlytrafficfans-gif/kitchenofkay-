@@ -8,6 +8,7 @@ export default defineConfig({
         main: resolve(import.meta.dirname, 'index.html'),
         order: resolve(import.meta.dirname, 'order.html'),
         orderSuccess: resolve(import.meta.dirname, 'order-success.html'),
+        testCheckout: resolve(import.meta.dirname, 'test-checkout.html'),
         privacy: resolve(import.meta.dirname, 'privacy.html'),
         terms: resolve(import.meta.dirname, 'terms.html'),
         notFound: resolve(import.meta.dirname, '404.html')
